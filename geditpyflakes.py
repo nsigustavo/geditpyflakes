@@ -69,7 +69,7 @@ def notify(title, message):
     try:
         import pynotify
         if pynotify.init("geditpyflakes"):
-            n = pynotify.Notification('title', 'message')
+            n = pynotify.Notification(title, message)
             n.show()
             time.sleep(1)
             n.close()
