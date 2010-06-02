@@ -33,11 +33,8 @@ class PyflakesPlugin(gedit.Plugin):
 
     def connect_document(self, doc):
         """Connect to document's 'saving' signal."""
-        lang = doc.get_language()
-        if lang:
-            if lang.get_name() == 'Python':
-                handler_id = doc.connect("saving", self.on_document_saving)
-                doc.set_data(self.__class__.__name__, handler_id)
+        handler_id = doc.connect("saving", self.on_document_saving)
+        doc.set_data(self.__class__.__name__, handler_id)
 
     def deactivate(self, window):
         name = self.__class__.__name__
@@ -50,12 +47,15 @@ class PyflakesPlugin(gedit.Plugin):
             doc.set_data(name, None)
 
     def on_document_saving(self, doc, *args):
-        text = doc.get_text(*doc.get_bounds())
-        filename = doc.get_uri_for_display()
-        with redirect_out() as out:
-            pyflakes.check(text, '    ')
-        if out.getvalue():
-            notify(filename, out.getvalue())
+        lang = doc.get_language()
+        if lang:
+            if lang.get_name() == 'Python':
+                text = doc.get_text(*doc.get_bounds())
+                filename = doc.get_uri_for_display()
+                with redirect_out() as out:
+                    pyflakes.check(text, '    ')
+                if out.getvalue():
+                    notify(filename, out.getvalue())
 
     def on_window_tab_added(self, window, tab):
         name = self.__class__.__name__
@@ -69,7 +69,7 @@ def notify(title, message):
     try:
         import pynotify
         if pynotify.init("geditpyflakes"):
-            n = pynotify.Notification(title, message)
+            n = pynotify.Notification('title', 'message')
             n.show()
             time.sleep(1)
             n.close()
