@@ -6,6 +6,7 @@ import time
 
 
 class redirect_out(object):
+
     def __enter__(self):
         self.stdout_old = sys.stdout
         self.stderr_old = sys.stderr
@@ -16,6 +17,7 @@ class redirect_out(object):
         sys.stdout = self.stdout_old
         sys.stderr_old = self.stderr_old
 
+
 class PyflakesPlugin(gedit.Plugin):
 
     def __init__(self):
@@ -24,7 +26,6 @@ class PyflakesPlugin(gedit.Plugin):
         self.id_name = 'pyflakes'
 
     def activate(self, window):
-        """Activate plugin."""
         handler_id = window.connect("tab-added", self.on_window_tab_added)
         window.set_data(self.__class__.__name__, handler_id)
         for doc in window.get_documents():
@@ -32,11 +33,13 @@ class PyflakesPlugin(gedit.Plugin):
 
     def connect_document(self, doc):
         """Connect to document's 'saving' signal."""
-        handler_id = doc.connect("saving", self.on_document_saving)
-        doc.set_data(self.__class__.__name__, handler_id)
+        lang = doc.get_language()
+        if lang:
+            if lang.get_name() == 'Python':
+                handler_id = doc.connect("saving", self.on_document_saving)
+                doc.set_data(self.__class__.__name__, handler_id)
 
     def deactivate(self, window):
-        """Deactivate plugin."""
         name = self.__class__.__name__
         handler_id = window.get_data(name)
         window.disconnect(handler_id)
@@ -47,16 +50,14 @@ class PyflakesPlugin(gedit.Plugin):
             doc.set_data(name, None)
 
     def on_document_saving(self, doc, *args):
-        """pyflakes in document."""
         text = doc.get_text(*doc.get_bounds())
         filename = doc.get_uri_for_display()
         with redirect_out() as out:
-            pyflakes.check(text, ' ')
+            pyflakes.check(text, '    ')
         if out.getvalue():
             notify(filename, out.getvalue())
 
     def on_window_tab_added(self, window, tab):
-        """Connect the document in tab."""
         name = self.__class__.__name__
         doc = tab.get_document()
         handler_id = doc.get_data(name)
