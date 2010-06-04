@@ -1,0 +1,31 @@
+import ludibrio
+
+
+>>> from plugin import PyflakesPlugin
+>>> from ludibrio import Stub, Mock, Dummy, equal_to
+
+>>> bound = Dummy()
+>>> with Stub() as window:
+...     doc = window.get_active_document()
+...     doc.get_uri_for_display() >> 'teste.py'
+...     doc.__len__() >> 1
+...     doc.get_bounds() >> [bound, bound]
+...     doc.get_text(bound, bound) >> "import os"
+...     lang = doc.get_language()
+...     lang.get_name() >> 'Python'
+
+>>> with Mock() as Notification:
+...     from pynotify import Notification
+...     notification = Notification('teste.py', equal_to("line:1: 'os' imported but unused\n"))
+...     notification.set_timeout(1) >> None
+...     notification.show() >> None
+
+>>> plubin = PyflakesPlugin(window)
+>>> plubin.update_ui()
+
+>>> notification.validate()
+
+
+
+
+

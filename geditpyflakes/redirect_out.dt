@@ -1,0 +1,9 @@
+
+
+>>> from plugin import redirect_out
+
+>>> with redirect_out() as out:
+...     print "line:1: geditpyflakes imported but unused"
+
+>>> out.getvalue()
+'line:1: geditpyflakes imported but unused\n'
