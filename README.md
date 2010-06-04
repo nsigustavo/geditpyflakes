@@ -6,13 +6,13 @@ Geditpyflakes plugin allow users to run Pyflakes inside Gedit and show found pyf
 Get and install
 ===============
 
-You can download geditpyflakes from my git branch using:
-    $ git clone git@github.com:nsigustavo/geditpyflakes.git
+You can download geditpyflakes:
+    $ wget http://github.com/nsigustavo/geditpyflakes/tarball/master
+    $ tar -xzvf nsigustavo-geditpyflakes*.tar.gz
 
 Put the geditpyflakes.gedit-plugin file and the whole content directory into ~/.gnome2/gedit/plugins.
-    $ cd geditpyflakes
+    $ cd nsigustavo-geditpyflakes*
     $ mkdir ~/.gnome2/gedit/plugins
-    
     $ cp -rf * ~/.gnome2/gedit/plugins
 
 Install dependence pynotify and pyflakes
