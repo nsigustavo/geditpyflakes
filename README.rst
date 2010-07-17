@@ -18,7 +18,7 @@ Put the geditpyflakes.gedit-plugin file and the whole content directory into ~/.
     $ mkdir ~/.gnome2/gedit/plugins
     $ cp -rf * ~/.gnome2/gedit/plugins
 
-Install dependence pynotify and pyflakes
+Install dependences: pynotify and pyflakes
 
 In gedit main menu go to: Edit -> Preferences
 
