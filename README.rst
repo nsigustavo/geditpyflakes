@@ -29,3 +29,16 @@ In Preferences dialog go to Plugins tab
 Find 'Gedit Pyflakes Plugins' in plugin list and check it
 
 
+
+Getting involved !
+==================
+
+Gedit Pyflakes Plugins is development may be viewed and followed on github::
+
+  http://github.com/nsigustavo/geditpyflakes
+
+
+Retrieve the source code using git::
+
+    $ git clone git://github.com/nsigustavo/geditpyflakes.git
+
