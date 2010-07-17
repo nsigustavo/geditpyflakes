@@ -1,3 +1,5 @@
+:author: Gustavo Rezende <nsigustavo@gmail.com>
+
 Gedit Pyflakes Plugins
 ======================
 
@@ -24,6 +26,6 @@ In gedit main menu go to: Edit -> Preferences
 
 In Preferences dialog go to Plugins tab
 
-Find 'interactive doctest' in plugin list and check it
+Find 'Gedit Pyflakes Plugins' in plugin list and check it
 
 
